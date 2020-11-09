@@ -11,6 +11,15 @@ app = Flask(__name__)
 app.secret_key = "dev"
 app.jinja_env.undefined = StrictUndefined
 
+@app.route('/')
+def homepage():
+
+    return render_template('homepage.html')
+
+
+# @app.route('/create_user')
+# de
+
 
 
 
