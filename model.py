@@ -23,7 +23,7 @@ class User(db.Model):
     city = db.Column(db.String, nullable = False)
     state = db.Column(db.String, nullable = False)
     visit = db.relationship('Visit')
-    # rating = db.relationship('Rating')
+   
 
 
     def __repr__(self):
@@ -43,7 +43,7 @@ class Visit(db.Model):
     forecast_office_id = db.Column(db.String, db.ForeignKey('forecast_offices.forecast_office_id'))
     
     user = db.relationship('User')
-    forecast_office = db.relationship('Forecast_office')
+    # forecast_office = db.relationship('Forecast_office')
 
 
     def __repr__(self):
