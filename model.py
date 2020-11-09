@@ -22,7 +22,7 @@ class User(db.Model):
     password = db.Column(db.String(30), nullable = False)
     city = db.Column(db.String, nullable = False)
     state = db.Column(db.String, nullable = False)
-    # visit = db.relationship('Visit')
+    visit = db.relationship('Visit')
     # rating = db.relationship('Rating')
 
 
@@ -31,6 +31,24 @@ class User(db.Model):
         return f'<User user_id={self.user_id} email={self.email} city={self.city}, state={self.state}>'
 
 
+class Visit(db.Model):
+    """A Visit."""
+
+    __tablename__ = 'visits'
+
+    visit_id = db.Column(db.Integer,
+                        autoincrement=True,
+                        primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
+    forecast_office_id = db.Column(db.String, db.ForeignKey('forecast_offices.forecast_office_id'))
+    
+    user = db.relationship('User')
+    forecast_office = db.relationship('Forecast_office')
+
+
+    def __repr__(self):
+        """ show info about visit """
+        return f'<User visit_id={self.visit_id} user_id={self.user_id}>'
 
 
 
