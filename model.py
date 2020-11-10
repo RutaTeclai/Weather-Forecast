@@ -25,31 +25,47 @@ class User(db.Model):
     visit = db.relationship('Visit')
    
 
-
     def __repr__(self):
         """ show info about user """
         return f'<User user_id={self.user_id} email={self.email} city={self.city}, state={self.state}>'
 
 
 class Visit(db.Model):
-    """A Visit."""
+    """ A Forecast office Visit """
 
     __tablename__ = 'visits'
 
-    visit_id = db.Column(db.Integer,
-                        autoincrement=True,
-                        primary_key=True)
+    visit_id = db.Column(db.Integer, 
+                autoincrement=True,
+                primary_key= True)
+
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
     forecast_office_id = db.Column(db.String, db.ForeignKey('forecast_offices.forecast_office_id'))
-    
+
     user = db.relationship('User')
-    # forecast_office = db.relationship('Forecast_office')
+    forecast_office = db.relationship('Forecast_office')
 
 
     def __repr__(self):
-        """ show info about visit """
-        return f'<User visit_id={self.visit_id} user_id={self.user_id}>'
+        return f'<Visit user_id={self.user_id}>'
 
+
+
+class Forecast_office(db.Model):
+    """ A Weather Forecast office - Wfo """
+
+    __tablename__ = 'forecast_offices'
+
+    forecast_office_id = db.Column(db.String, 
+                                     primary_key= True)
+    office_name = db.Column(db.String, nullable = False)
+
+
+    visit = db.relationship('Visit')
+
+
+    def __repr__(self):
+        return f'<Forecast Office forecast_office_id={self.forecast_office_id} Forecast Office= {self.office_name}>'
 
 
 def connect_to_db(flask_app, db_uri='postgresql:///forecasts', echo=True):
