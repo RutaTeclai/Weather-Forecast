@@ -68,6 +68,23 @@ class Forecast_office(db.Model):
         return f'<Forecast Office forecast_office_id={self.forecast_office_id} Forecast Office= {self.office_name}>'
 
 
+class Station(db.Model):
+    """ A Weather Forecast Observation Station """
+
+    __tablename__ = 'stations'
+
+    station_id = db.Column(db.String,
+                            primary_key = True)
+    station_name = db.Column(db.String, nullable = False)
+    elevation = db.Column(db.Float, nullable = True)
+    timezone = db.Column(db.String, nullable=True)
+
+    forecast_office_id = db.Column(db.String, db.ForeignKey('forecast_offices.forecast_office_id'))
+
+    def __repr__(self):
+        return f'<Forecast Station station_id={self.station_id} Station Name= {self.station_name}>'
+
+
 def connect_to_db(flask_app, db_uri='postgresql:///forecasts', echo=True):
     flask_app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
     flask_app.config['SQLALCHEMY_ECHO'] = echo
