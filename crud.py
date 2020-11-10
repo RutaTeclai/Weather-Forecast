@@ -1,6 +1,6 @@
 """CRUD operations."""
 
-from model import db, User, Visit, Forecast_office, Station, connect_to_db
+from model import db, User, Visit, Forecast_office, Station, Geodata, connect_to_db
 from datetime import datetime
 
 
@@ -40,7 +40,7 @@ def create_forecast_office(forecast_office_id, office_name):
     return forecast_office
 
 
-def create_station(station_id, station_name, timezone, elevation, forecast_office_id):
+def create_station(station_id, station_name,elevation, forecast_office_id,timezone=''):
     """ Create and return a new Forecast Observation Station aka Station """
 
     station = Station(station_id = station_id, station_name = station_name,
