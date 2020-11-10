@@ -47,7 +47,8 @@ class Visit(db.Model):
 
 
     def __repr__(self):
-        return f'<Visit user_id={self.user_id}>'
+        """ show info about visit """
+        return f'<Visit user_id={self.user_id}, forecast_office_id {self.forecast_office_id}>'
 
 
 
@@ -80,6 +81,8 @@ class Station(db.Model):
     timezone = db.Column(db.String, nullable=True)
 
     forecast_office_id = db.Column(db.String, db.ForeignKey('forecast_offices.forecast_office_id'))
+
+    forecast_office = db.relationship('Forecast_office')
 
     def __repr__(self):
         return f'<Forecast Station station_id={self.station_id} Station Name= {self.station_name}>'
