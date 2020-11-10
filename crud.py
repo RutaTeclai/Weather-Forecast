@@ -1,6 +1,6 @@
 """CRUD operations."""
 
-from model import db, User, Visit, Forecast_office, Station, Geodata, connect_to_db
+from model import db, User, Visit, Forecast_office, Station, Geodata, Forecast, connect_to_db
 from datetime import datetime
 
 
@@ -66,6 +66,21 @@ def create_geodata(city, state,latitude, longitude, station_id):
 
     return geodata
 
+
+def create_forecast(temp_high, temp_low, image, weather_description, humidity, dew_point,
+                     geodata_id, forecast_office_id,forecast_date=datetime.now()):
+    
+    """ Create adn return a new Forecast - weatherdata for a given date, default = now """
+
+    forecast = Forecast(temp_high= temp_high, temp_low=temp_low, image=image, 
+                        weather_description= weather_description, humidity=humidity,
+                        dew_point= dew_point,geodata_id= geodata_id,
+                        forecast_office_id= forecast_office_id,forecast_date= forecast_date)
+
+    db.session.add(forecast)
+    db.session.commit()
+
+    return forecast
 
     
 
