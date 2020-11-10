@@ -29,10 +29,11 @@ def create_visit(user, forecast_office):
     return visit
 
 
-def create_forecast_office(forecast_office_id, office_name):
+def create_forecast_office(forecast_office_id, office_name, grid_x, grid_y):
     """ Create and return a new Forecast Office - Wfo """
 
-    forecast_office = Forecast_office(forecast_office_id = forecast_office_id, office_name = office_name)
+    forecast_office = Forecast_office(forecast_office_id = forecast_office_id, office_name = office_name,
+                                        grid_x = grid_x, grid_y = grid_y)
 
     db.session.add(forecast_office)
     db.session.commit()
@@ -53,7 +54,20 @@ def create_station(station_id, station_name,elevation, forecast_office_id,timezo
     return station
 
 
+def create_geodata(city, state,latitude, longitude, station_id):
+    """ Create and return a new Geodata - city,state - latitude, longitude """
 
+    geodata = Geodata(city = city, state = state,
+                        latitude = latitude, longitude= longitude,
+                        station_id = station_id)
+
+    db.session.add(geodata)
+    db.session.commit()
+
+    return geodata
+
+
+    
 
 
 

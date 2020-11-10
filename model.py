@@ -22,6 +22,7 @@ class User(db.Model):
     password = db.Column(db.String(30), nullable = False)
     city = db.Column(db.String, nullable = False)
     state = db.Column(db.String, nullable = False)
+    
     visit = db.relationship('Visit')
    
 
@@ -60,10 +61,13 @@ class Forecast_office(db.Model):
     forecast_office_id = db.Column(db.String, 
                                      primary_key= True)
     office_name = db.Column(db.String, nullable = False, unique = True)
+    grid_x = db.Column(db.Float, nullable= False)
+    grid_y= db.Column(db.Float, nullable= False)
 
 
     visit = db.relationship('Visit')
     station = db.relationship('Station')
+    forecast = db.relationship('Forecast_office')
 
 
     def __repr__(self):
@@ -108,10 +112,36 @@ class Geodata(db.Model):
     station_id = db.Column(db.String, db.ForeignKey('stations.station_id'))
 
     station = db.relationship('Station')
+    forecast = db.relationship('Forecast')
 
     def __repr__(self):
         """ show info about Geodata """
         return f'<Geodata city={self.city} State= {self.state} lat= {self.latitude}, longtidue= {self.longitude}>'
+
+class Forecast(db.Model):
+    """ A forecast info  """
+
+    __tablename__ = 'forecasts'
+
+    forecast_id = db.Column(db.Integer, autoincrement = True,
+                            primary_key = True)
+    temp_high = db.Column(db.Float, nullable=False, 
+                    unique = True)
+    temp_low = db.Column(db.Float, nullable = False)
+    image = db.Column(db.String, nullable = False)
+    weather_description = db.Column(db.String, nullable = False)
+    humidity = db.Column(db.Float)
+    dew_point = db.Column(db.Float)
+    forecast_date= db.Column(db.Datetime)
+    geodata_id = db.Column(db.Integer, db.ForeignKey('geodatas.geodata_id'))
+    forecast_office_id = db.Column(db.String, db.ForeignKey('forecast_offices.forecast_office_id'))
+
+    geodata = db.relationship('Geodata')
+    forecast_office = db.relationship('Forecast_office')
+
+    def __repr__(self):
+        """ show info about Forecast """
+        return f'<Forecast Temp_high={self.temp_high} Temp_low= {self.temp_low} forecast_date= {self.forecast_date}, humidity= {self.humidity}>'
 
 
 
