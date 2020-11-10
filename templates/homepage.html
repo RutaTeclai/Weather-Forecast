@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %} Weather Forecast {% endblock %} 
+
+
+{% block body %}
+
+    <h1>Welcome to Weather Forecast!!!</h1>
+
+    <div class="user_login">
+        <h2>Sign-in to your Account</h2>
+
+        <form action="/forecast" class="user_login">
+            <p>
+                Email <input type="text" name= "email">
+            </p>
+            <p>
+                Password <input type="text" name="password">
+            </p><br>
+            
+            <input type="submit" value="Sign In">
+    </div>
+    <div class= "user_account">
+        <button>Create User Account</button>
+    </div>
+
+
+
+    </form>
+
+
+
+{% endblock %}
