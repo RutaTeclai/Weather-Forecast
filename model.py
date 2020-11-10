@@ -22,7 +22,7 @@ class User(db.Model):
     password = db.Column(db.String(30), nullable = False)
     city = db.Column(db.String, nullable = False)
     state = db.Column(db.String, nullable = False)
-    
+
     visit = db.relationship('Visit')
    
 
@@ -67,7 +67,7 @@ class Forecast_office(db.Model):
 
     visit = db.relationship('Visit')
     station = db.relationship('Station')
-    forecast = db.relationship('Forecast_office')
+    forecast = db.relationship('Forecast')
 
 
     def __repr__(self):
@@ -132,7 +132,7 @@ class Forecast(db.Model):
     weather_description = db.Column(db.String, nullable = False)
     humidity = db.Column(db.Float)
     dew_point = db.Column(db.Float)
-    forecast_date= db.Column(db.Datetime)
+    forecast_date= db.Column(db.DateTime)
     geodata_id = db.Column(db.Integer, db.ForeignKey('geodatas.geodata_id'))
     forecast_office_id = db.Column(db.String, db.ForeignKey('forecast_offices.forecast_office_id'))
 
