@@ -83,7 +83,12 @@ def create_forecast(temp_high, temp_low, image, weather_description, humidity, d
     return forecast
 
     
+def get_user_by_email(email):
+    
 
+    user = User.query.filter(User.email == email).all()
+    
+    return user
 
 
 if __name__ == '__main__':

@@ -3,7 +3,7 @@
 
 
 {% block body %}
-
+<!-- https://worldpopulationreview.com/states/state-abbreviations --dataset for state_code -->
     <h1>Welcome to Weather Forecast!!!</h1>
 
     <div class="user_login">
@@ -18,15 +18,39 @@
             </p><br>
             
             <input type="submit" value="Sign In">
+        </form>
     </div>
     <div class= "user_account">
-        <button>Create User Account</button>
+        <button id= "user_form">Create User Account</button>
+        <div>
+            <form id= "create_user" action="create_user" method="POST">
+                <p>
+                    First Name <input type="text" name="fname">
+                </p>
+                <p>
+                    Last Name <input type="text" name="lname">
+                </p>
+                <p>
+                    Email <input type="text" name= "email">
+                </p>
+                <p>
+                    Password <input type="password" name="password">
+                </p>
+                <p>
+                    City <input type="text" name="city">
+                </p>
+                <p>
+                    State <select name="state">
+                        {% for state in state_code %}
+                            <option value="{{state['Code']}}">{{state['State']}}</option>
+                        {% endfor %}
+                    </select>
+                </p>
+                <p>
+                    <input type="submit">
+                </p>
+            </form>
+        </div>
     </div>
-
-
-
-    </form>
-
-
 
 {% endblock %}
