@@ -1,10 +1,23 @@
 {% extends 'base.html' %}
 {% block title %} Weather Forecast {% endblock %} 
+<title>My Application</title> 
 
 
 {% block body %}
 <!-- https://worldpopulationreview.com/states/state-abbreviations --dataset for state_code -->
+<!-- https://simplemaps.com/data/us-cities -->
     <h1>Welcome to Weather Forecast!!!</h1>
+
+    {% with messages = get_flashed_messages() %}
+	  {% if messages %}
+	    {% for message in messages %}
+		  <div class="alert alert-warning alert-dismissible" role="alert">
+		  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+			{{message}}
+		  </div>
+		{% endfor %}
+	  {% endif %}
+	{% endwith %}
 
     <div class="user_login">
         <h2>Sign-in to your Account</h2>
@@ -52,5 +65,33 @@
             </form>
         </div>
     </div>
+
+    <!-- <form  action="create_user" method="POST">
+        <p>
+            name <input type="text" name="fname">
+        </p>
+        <p>
+            Last Name <input type="text" name="lname">
+        </p>
+        <p>
+            Email <input type="text" name= "email">
+        </p>
+        <p>
+            Password <input type="password" name="password">
+        </p>
+        <p>
+            City <input type="text" name="city">
+        </p>
+        <p>
+            State <select name="state">
+                {% for state in state_code %}
+                    <option value="{{state['Code']}}">{{state['State']}}</option>
+                {% endfor %}
+            </select>
+        </p>
+        <p>
+            <input type="submit">
+        </p>
+    </form> -->
 
 {% endblock %}
