@@ -4,6 +4,7 @@ from flask import (Flask, render_template, request,
                     flash, session, redirect)
 from model import connect_to_db
 import crud
+import forecast_data
 from jinja2 import StrictUndefined
 
 import json
@@ -56,7 +57,12 @@ def show_forecast_page():
 
     user= crud.get_user_by_email(email)
     if user and user[0].password == password:
-        return render_template('forecastpage.html')
+        office = crud.get_office_by_city_state(user[0].city, user[0].state)
+        if office:
+            forecast = forecast_data.forecast_request(office)
+            return render_template('forecastpage.html', forecast=forecast)
+
+        #TODO else part call a function that returns a lat and long of city,state
     else:
         flash("Enter correct email and password or create a new user account")
         return redirect('/')

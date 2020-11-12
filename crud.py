@@ -91,6 +91,13 @@ def get_user_by_email(email):
     
     return user
 
+def get_office_by_city_state(user_city,user_state):
+    """ returns an object of type Forecast_office """
+    forecast = Forecast.query.filter(Forecast.city == user_city, Forecast.state == user_state).first()
+    office = forecast.forecast_office
+    return office
+
+
 def get_office_by_id(office_dict):
     office_id = office_dict['cwa']
     office = Forecast_office.query.filter(Forecast_office.forecast_office_id == office_id).all()

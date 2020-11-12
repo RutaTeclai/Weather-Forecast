@@ -61,8 +61,8 @@ class Forecast_office(db.Model):
     forecast_office_id = db.Column(db.String, 
                                      primary_key= True)
     office_name = db.Column(db.String, nullable = False, unique = True)
-    grid_x = db.Column(db.Float, nullable= False)
-    grid_y= db.Column(db.Float, nullable= False)
+    grid_x = db.Column(db.Integer, nullable= False)
+    grid_y= db.Column(db.Integer, nullable= False)
 
 
     visit = db.relationship('Visit')
@@ -75,49 +75,6 @@ class Forecast_office(db.Model):
         return f'<Forecast Office forecast_office_id={self.forecast_office_id} Forecast Office={self.office_name}>'
 
 
-
-# class Station(db.Model):
-#     """ A Weather Forecast Observation Station """
-
-#     __tablename__ = 'stations'
-
-#     station_id = db.Column(db.String,
-#                             primary_key = True)
-#     station_name = db.Column(db.String, nullable = False)
-#     elevation = db.Column(db.Float, nullable = True)
-#     timezone = db.Column(db.String, nullable=True)
-
-#     forecast_office_id = db.Column(db.String, db.ForeignKey('forecast_offices.forecast_office_id'))
-
-#     forecast_office = db.relationship('Forecast_office')
-#     geodata = db.relationship('Geodata')
-
-#     def __repr__(self):
-#         """ show info about station """
-#         return f'<Forecast Station station_id={self.station_id} Station Name= {self.station_name}>'
-
-
-# class Geodata(db.Model):
-#     """ A Geodata info including - (latitude & longitude) of a City """
-
-#     __tablename__ = 'geodatas'
-
-#     geodata_id = db.Column(db.Integer, autoincrement = True,
-#                             primary_key = True)
-#     city = db.Column(db.String, nullable=False, 
-#                     unique = True)
-#     state = db.Column(db.String, nullable = False)
-#     latitude = db.Column(db.Float, nullable = False)
-#     longitude = db.Column(db.Float, nullable = False)
-#     station_id = db.Column(db.String, db.ForeignKey('stations.station_id'))
-
-#     station = db.relationship('Station')
-#     forecast = db.relationship('Forecast')
-
-#     def __repr__(self):
-#         """ show info about Geodata """
-#         return f'<Geodata city={self.city} State= {self.state} lat= {self.latitude}, longtidue= {self.longitude}>'
-
 class Forecast(db.Model):
     """ A forecast info  """
 
@@ -125,6 +82,7 @@ class Forecast(db.Model):
 
     forecast_id = db.Column(db.Integer, autoincrement = True,
                             primary_key = True)
+    forecast_office_id = db.Column(db.String, db.ForeignKey('forecast_offices.forecast_office_id'))
     temp_high = db.Column(db.Float, nullable=False, 
                     unique = True)
     temp_low = db.Column(db.Float, nullable = False)
@@ -133,12 +91,9 @@ class Forecast(db.Model):
     humidity = db.Column(db.Float)
     dew_point = db.Column(db.Float)
     forecast_date= db.Column(db.DateTime)
-    # geodata_id = db.Column(db.Integer, db.ForeignKey('geodatas.geodata_id'))
     city = db.Column(db.String, nullable = False)
     state = db.Column(db.String, nullable = False)
-    forecast_office_id = db.Column(db.String, db.ForeignKey('forecast_offices.forecast_office_id'))
-
-    # geodata = db.relationship('Geodata')
+    
     forecast_office = db.relationship('Forecast_office')
 
     def __repr__(self):
