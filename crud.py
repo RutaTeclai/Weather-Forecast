@@ -1,6 +1,7 @@
 """CRUD operations."""
 
-from model import db, User, Visit, Forecast_office, Station, Geodata, Forecast, connect_to_db
+from model import db, User, Visit, Forecast_office, Forecast, connect_to_db
+# from model import db, User, Visit, Forecast_office, Station, Geodata, Forecast, connect_to_db
 from datetime import datetime
 
 
@@ -41,41 +42,41 @@ def create_forecast_office(forecast_office_id, office_name, grid_x, grid_y):
     return forecast_office
 
 
-def create_station(station_id, station_name,elevation, forecast_office_id,timezone=''):
-    """ Create and return a new Forecast Observation Station aka Station """
+# def create_station(station_id, station_name,elevation, forecast_office_id,timezone=''):
+#     """ Create and return a new Forecast Observation Station aka Station """
 
-    station = Station(station_id = station_id, station_name = station_name,
-                        timezone = timezone, elevation = elevation,
-                        forecast_office_id = forecast_office_id)
+#     station = Station(station_id = station_id, station_name = station_name,
+#                         timezone = timezone, elevation = elevation,
+#                         forecast_office_id = forecast_office_id)
 
-    db.session.add(station)
-    db.session.commit()
+#     db.session.add(station)
+#     db.session.commit()
 
-    return station
+#     return station
 
 
-def create_geodata(city, state,latitude, longitude, station_id):
-    """ Create and return a new Geodata - city,state - latitude, longitude """
+# def create_geodata(city, state,latitude, longitude, station_id):
+#     """ Create and return a new Geodata - city,state - latitude, longitude """
 
-    geodata = Geodata(city = city, state = state,
-                        latitude = latitude, longitude= longitude,
-                        station_id = station_id)
+#     geodata = Geodata(city = city, state = state,
+#                         latitude = latitude, longitude= longitude,
+#                         station_id = station_id)
 
-    db.session.add(geodata)
-    db.session.commit()
+#     db.session.add(geodata)
+#     db.session.commit()
 
-    return geodata
+#     return geodata
 
 
 def create_forecast(temp_high, temp_low, image, weather_description, humidity, dew_point,
-                     geodata_id, forecast_office_id,forecast_date=datetime.now()):
+                    forecast_office_id,city, state,forecast_date=datetime.now()):
     
     """ Create adn return a new Forecast - weatherdata for a given date, default = now """
 
     forecast = Forecast(temp_high= temp_high, temp_low=temp_low, image=image, 
                         weather_description= weather_description, humidity=humidity,
-                        dew_point= dew_point,geodata_id= geodata_id,
-                        forecast_office_id= forecast_office_id,forecast_date= forecast_date)
+                        dew_point= dew_point,forecast_office_id= forecast_office_id,
+                        city=city, state=state,forecast_date= forecast_date)
 
     db.session.add(forecast)
     db.session.commit()

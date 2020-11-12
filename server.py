@@ -1,12 +1,13 @@
 """Server for weather forecasts app."""
 
 from flask import (Flask, render_template, request,
-                    flash, session, redirect, requests)
+                    flash, session, redirect)
 from model import connect_to_db
 import crud
 from jinja2 import StrictUndefined
 
 import json
+import requests
 
 
 app = Flask(__name__)
@@ -75,12 +76,19 @@ def city_geodata(city_name,state):
             longitude = city['lng']
             coordinates.extend([latitude,longitude])
             
-    return (coordinates)
+    return coordinates
 
 def get_forecast_office(coordinate_list):
     lat, lng = coordinate_list
-    res = requests.get('https://api.weather.gov/points/44.7544,-93.3631')
-    res = requsests.get(f'https://api.weather.gov/points/{lat},{lng}')
+    res = requests.get(f'https://api.weather.gov/points/{lat},{lng}')
+
+    forecast_office = res.json()
+    forecast_office_data = forecast_office['properties']
+
+    return forecast_office_data
+    # forecast_office_id = forecast_office_data['cwa']
+    # forecast_office_data['gridX']
+    # forecast_office_data['gridY']
 
 
 if __name__ == '__main__':
