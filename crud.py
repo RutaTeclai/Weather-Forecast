@@ -1,6 +1,7 @@
 """CRUD operations."""
 
 from model import db, User, Visit, Forecast_office, Forecast, connect_to_db
+import server
 # from model import db, User, Visit, Forecast_office, Station, Geodata, Forecast, connect_to_db
 from datetime import datetime
 
@@ -33,7 +34,7 @@ def create_visit(user, forecast_office):
 def create_forecast_office(forecast_office_id, office_name, grid_x, grid_y):
     """ Create and return a new Forecast Office - Wfo """
 
-    forecast_office = Forecast_office(forecast_office_id = forecast_office_id, office_name = office_name,
+    forecast_office = Forecast_office(forecast_office_id=forecast_office_id, office_name=office_name,
                                         grid_x = grid_x, grid_y = grid_y)
 
     db.session.add(forecast_office)
@@ -86,10 +87,19 @@ def create_forecast(temp_high, temp_low, image, weather_description, humidity, d
     
 def get_user_by_email(email):
     
-
     user = User.query.filter(User.email == email).all()
     
     return user
+
+def get_office_by_id(office_dict):
+    office_id = office_dict['cwa']
+    office = Forecast_office.query.filter(Forecast_office.forecast_office_id == office_id).all()
+    
+    return office
+
+
+
+
 
 
 if __name__ == '__main__':
