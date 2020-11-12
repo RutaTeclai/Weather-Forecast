@@ -24,38 +24,44 @@ def homepage():
     return render_template('homepage.html', state_code = state_code_dict)
 
 
-# @app.route('/create_user', methods=['POST'])
-# def create_user_account():
-#     """ Register a new User """
+@app.route('/create_user', methods=['POST'])
+def create_user_account():
+    """ Register a new User """
 
-#     fname= request.form.get('fname')
-#     lname= request.form.get('lname')
-#     email= request.form.get('email')
-#     password= request.form.get('password')
-#     city= request.form.get('city')
-#     state= request.form.get('state')
+    fname= request.form.get('fname')
+    lname= request.form.get('lname')
+    email= request.form.get('email')
+    password= request.form.get('password')
+    city= request.form.get('city')
+    state= request.form.get('state')
 
-#     user = crud.get_user_by_email(email)
+    user = crud.get_user_by_email(email)
    
 
-#     if user:
-#         flash("The email already in use. Use different email!")
+    if user:
+        flash("The email already in use. Use different email!")
         
 
-#     else:
-#         crud.create_user(fname, lname, email, password, city, state)
-#         flash("Account successful created. Please Log In")
+    else:
+        crud.create_user(fname, lname, email, password, city, state)
+        flash("Account successful created. Please Log In")
 
-#     return redirect('/')
+    return redirect('/')
 
 
-# @app.route('/forecast')
-# def show_forecast_page():
-#     email= request.args.get('email')
-#     password= request.args.get('password')
+@app.route('/forecast')
+def show_forecast_page():
+    email= request.args.get('email')
+    password= request.args.get('password')
 
-#     user= crud.get_user_by_email(email)
-#     if user:
+    user= crud.get_user_by_email(email)
+    if user and user[0].password == password:
+        return render_template('forecastpage.html')
+    else:
+        flash("Enter correct email and password or create a new user account")
+        return redirect('/')
+
+
 #         user_city = user[0].city
 #         user_state = user[0].state 
 #         user_coordinates = city_geodata(user_city, user_state)

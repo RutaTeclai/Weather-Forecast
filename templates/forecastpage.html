@@ -4,14 +4,6 @@
 
 {% block body %}
 <p>welcome</p>
-<p>{{user_city}}</p>
-<p>{{user_state}}</p>
-<p> Your local forecast office is {{user_forecast_dict['office_name']}}</p>
-<p>Current conditions at {{user_forecast_dict['station']}}</p>
- <p>{{forecast_dict['properties']['updated']}}</p>
- <p>{{(forecast_dict['properties']['periods'])[0]}}</p>
- {% for day in (forecast_dict['properties']['periods']) %}
-    <p>{{day['name']}}</p>
- {% endfor %}
+
 
 {% endblock %}
