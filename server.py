@@ -56,17 +56,29 @@ def show_forecast_page():
     password= request.args.get('password')
 
     user= crud.get_user_by_email(email)
-    if user and user[0].password == password:
-        office = crud.get_office_by_city_state(user[0].city, user[0].state)
-        if office:
-            forecast = forecast_data.forecast_request(office)
-            return render_template('forecastpage.html', forecast=forecast)
 
-        #TODO else part call a function that returns a lat and long of city,state
+    if user and user[0].password == password:
+
+        forecast = forecast_data.show_forecast(user[0].city,user[0].state)
+        state_code_dict= get_state_code()
+        return render_template('forecastpage.html', forecast=forecast, city =user[0].city, state=user[0].state,
+                                state_code = state_code_dict)
+        
     else:
         flash("Enter correct email and password or create a new user account")
         return redirect('/')
 
+@app.route('/forecast_search')
+def show_forecast_by_city():
+    city = request.args.get('city')
+    state = request.args.get('state')
+
+    state_code_dict= get_state_code()
+
+    forecast = forecast_data.show_forecast(city,state)
+    
+    return render_template('forecastpage.html', forecast=forecast, city =city, state=state,
+                            state_code = state_code_dict)
 
 #         user_city = user[0].city
 #         user_state = user[0].state 
@@ -89,19 +101,7 @@ def show_forecast_page():
 #         return redirect('/')
 
 
-# def city_geodata(city_name,state):
-#     coordinates = []
-#     city_data = open('data/cities_geodata.json').read()
-
-#     city_data_dict = json.loads(city_data)
-#     for city in city_data_dict:
-        
-#         if city['city'] == city_name and city['state_id'] == state:
-#             latitude = city['lat']
-#             longitude = city['lng']
-#             coordinates.extend([latitude,longitude])
-            
-#     return coordinates
+# 
 
 # def get_forecast_office_dict(coordinate_list):
 #     lat, lng = coordinate_list

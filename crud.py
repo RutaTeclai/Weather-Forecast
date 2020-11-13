@@ -43,32 +43,6 @@ def create_forecast_office(forecast_office_id, office_name, grid_x, grid_y):
     return forecast_office
 
 
-# def create_station(station_id, station_name,elevation, forecast_office_id,timezone=''):
-#     """ Create and return a new Forecast Observation Station aka Station """
-
-#     station = Station(station_id = station_id, station_name = station_name,
-#                         timezone = timezone, elevation = elevation,
-#                         forecast_office_id = forecast_office_id)
-
-#     db.session.add(station)
-#     db.session.commit()
-
-#     return station
-
-
-# def create_geodata(city, state,latitude, longitude, station_id):
-#     """ Create and return a new Geodata - city,state - latitude, longitude """
-
-#     geodata = Geodata(city = city, state = state,
-#                         latitude = latitude, longitude= longitude,
-#                         station_id = station_id)
-
-#     db.session.add(geodata)
-#     db.session.commit()
-
-#     return geodata
-
-
 def create_forecast(temp_high, temp_low, image, weather_description, humidity, dew_point,
                     forecast_office_id,city, state,forecast_date=datetime.now()):
     
@@ -103,6 +77,8 @@ def get_office_by_id(office_dict):
     office = Forecast_office.query.filter(Forecast_office.forecast_office_id == office_id).all()
     
     return office
+
+
 
 
 

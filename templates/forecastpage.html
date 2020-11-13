@@ -3,7 +3,144 @@
 
 
 {% block body %}
-<p>welcome</p>
-<p>{{ forecast }}</p>
+<div class="container-fluid">
+
+    <div class="row search-box">
+        <div class="col">
+            <form action="/forecast_search" class="city-state">
+                <p>
+                    Enter a City <input type="text" name= "city">
+                </p>
+                <p>
+                    State <select name="state">
+                        {% for state in state_code %}
+                            <option value="{{state['Code']}}">{{state['State']}}</option>
+                        {% endfor %}
+                    </select>
+                </p><br>
+                
+                <input type="submit" value="Show Forecast">
+            </form>
+
+        </div>
+        <div class="col zipcode">
+            
+        </div>
+
+    </div>
+
+    <div class="row">
+        <p> ---</p>
+    </div>
+    <div class="row">
+        <div class="station">
+            <p>current conditions at</p>
+        </div>
+    </div>
+    <div class="row weather_data">
+        
+        <div class="col">
+            <div class="icon">
+                <img src="https://api.weather.gov/icons/land/day/few?size=medium">
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="weather_desc">
+                <p>
+                    Fair, 68 oF
+                </p>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="other-weather-data">
+                humidity, wind_speed etc
+                <div class="row">
+                    Last updated  {{forecast['properties']['updated']}}
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="row current forecast">rows in side columns</div>
+            <div class="row">another row</div>
+        </div>
+
+    </div>
+
+    <div class="row extended-forecast">
+        
+    </div>
+    <div class="row">Extended Forecast for</div>
+    <div class="row">{{city}}, {{state}}</div>
+
+    <div class="row days-forecast">
+        {% for forecast in forecast['properties']['periods']%}
+            <div class="col">
+                <div class="row">{{forecast['name']}}</div>
+                <div class="row"><img src="{{forecast['icon']}}"></div>
+                <div class="row">{{forecast['shortForecast']}}</div>
+                <div class="row">{{forecast['temperature']}}</div>
+                <!-- change this witt div and block style -->
+            </div>
+        {% endfor %}
+    </div>
+
+    
+    <!-- <div class="row days-forecast">
+        <div class="col">Day2
+            <div class="row"></div>
+            <div class="row"></div>
+            <div class="row"></div>
+            <div class="row"></div>
+            <div class="row"></div>
+            <div class="row"></div>
+        </div>
+        <div class="col">Day3
+            <div class="row"></div>
+            <div class="row"></div>
+            <div class="row"></div>
+            <div class="row"></div>
+            <div class="row"></div>
+            <div class="row"></div>
+        </div>
+        <div class="col">Day4
+            <div class="row"></div>
+            <div class="row"></div>
+            <div class="row"></div>
+            <div class="row"></div>
+            <div class="row"></div>
+            <div class="row"></div>
+        </div>
+        <div class="col">Day5
+            <div class="row"></div>
+            <div class="row"></div>
+            <div class="row"></div>
+            <div class="row"></div>
+            <div class="row"></div>
+            <div class="row"></div>
+        </div>
+        <div class="col">Day6
+            <div class="row"></div>
+            <div class="row"></div>
+            <div class="row"></div>
+            <div class="row"></div>
+            <div class="row"></div>
+            <div class="row"></div>
+        </div>
+        <div class="col">Day7
+            <div class="row"></div>
+            <div class="row"></div>
+            <div class="row"></div>
+            <div class="row"></div>
+            <div class="row"></div>
+            <div class="row"></div>
+        </div>
+
+    </div> -->
+
+
+
+</div>
+
 
 {% endblock %}
